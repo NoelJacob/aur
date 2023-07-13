@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 47 */6 * * *
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-node@v3.7.0
+    - run: node dist/index.js
+      env:
+        SSH_KEY: ${{ $secrets.SSH_KEY }}
