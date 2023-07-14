@@ -8,7 +8,7 @@ import {env, exit} from "process";
 //     writeFileSync(`${env["HOME"]}/.ssh/aur_ed25519`, env["SSH_KEY"], {encoding: "utf-8"});
 //     execSync(`chmod 600 ${env["HOME"]}/.ssh/aur_ed25519`);
 // }
-const s = execSync("ssh-agent -s").toString() + `ssh-add ${env["HOME"]}/.ssh/aur_ed25519;\n`;
+const s = execSync("ssh-agent -s").toString() + `ssh-add - <<< $SSH_KEY;\n`;
 execSync(s + "git submodule update --init --recursive");
 
 const checkBun = async () => {
