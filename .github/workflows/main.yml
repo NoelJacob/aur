@@ -7,6 +7,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+    - run: |
+        git config --global credential.helper cache;
+        git clone git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git;
     - run: node -v
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
