@@ -8,7 +8,7 @@ if (!existsSync(`${env["HOME"]}/.ssh/aur_ed25519`)) {
     writeFileSync(`${env["HOME"]}/.ssh/aur_ed25519`, env["SSH_KEY"], {encoding: "utf-8", mode: 0o600});
     execSync("ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts");
 }
-const s = execSync("ssh-agent -s").toString() + `ssh-add ${env["HOME"]}/.ssh/aur_ed25519;\n`;
+const s = execSync("ssh-agent -s").toString() + `ssh-add ${env["HOME"]}/.ssh/aur_ed25519 &&\n`;
 execSync(s + "git submodule update --init --recursive");
 
 const checkBun = async () => {
@@ -48,11 +48,11 @@ const checkBun = async () => {
     let pkg1 = readFileSync("bunjs-bin/PKGBUILD", {encoding: "utf-8"});
     let pkg2 = pkg1.replace(v1, v2).replace(shax861, shax862).replace(shaarm1, shaarm2);
     writeFileSync("bunjs-bin/PKGBUILD", pkg2, {encoding: "utf-8"});
-    execSync("cd bunjs-bin;\n" +
-        "makepkg --printsrcinfo > .SRCINFO;\n" +
+    execSync("cd bunjs-bin &&\n" +
+        "makepkg --printsrcinfo > .SRCINFO &&\n" +
         "git add * .*");
-    execSync(s + "cd bunjs-bin;\n" +
-        `git commit -m "${v2}";\n` +
+    execSync(s + "cd bunjs-bin &&\n" +
+        `git commit -m "${v2}" &&\n` +
         "git push");
 }
 
