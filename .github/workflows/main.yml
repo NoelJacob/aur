@@ -10,8 +10,8 @@ jobs:
     steps:
     - run: |
         git config --global credential.helper cache;
-        git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git;
-    - run: node -v
+        git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
+    - run: node dist/index.js
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
