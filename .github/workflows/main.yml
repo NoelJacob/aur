@@ -9,12 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
-#    - run: |
-#        mkdir $HOME/.ssh &&
-#        echo $SSH_KEY > $HOME/.ssh/aur_ed2551 &&
-#        chmod 600 $HOME/.ssh/aur_ed2551
-#      env:
-#        SSH_KEY: ${{ secrets.SSH_KEY }}
     - run: node dist/index.js
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
