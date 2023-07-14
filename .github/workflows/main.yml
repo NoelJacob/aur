@@ -1,4 +1,5 @@
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: 47 */6 * * *
@@ -9,7 +10,7 @@ jobs:
     steps:
     - run: |
         git config --global credential.helper cache;
-        git clone git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git;
+        git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git;
     - run: node -v
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
