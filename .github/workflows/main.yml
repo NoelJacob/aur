@@ -7,8 +7,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v3.7.0
-    - run: cd .. && ls -a
+    - run: which node
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
