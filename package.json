@@ -3,15 +3,14 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "build": "bun build index.ts --outdir dist --target node"
+    "build": "bun build index.ts --outdir dist --target node",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "tsx": "^3.12.7"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "tsx": "^3.12.7"
   }
 }
