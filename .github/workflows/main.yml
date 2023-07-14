@@ -11,3 +11,4 @@ jobs:
     - run: node dist/index.js
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
+        GITHUB_TOKEN: ${{ GITHUB_TOKEN }}
