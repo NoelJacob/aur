@@ -55,7 +55,7 @@ const checkBun = async () => {
         writeFileSync("bunjs-bin/PKGBUILD", pkg2, {encoding: "utf-8"});
         execSync("cd bunjs-bin &&\n" +
             "makepkg --printsrcinfo > .SRCINFO &&\n" +
-            "git add * .*");
+            "git add PKGBUILD .SRCINFO");
         execSync(s + "cd bunjs-bin &&\n" +
             `git commit -m "${v2}" &&\n` +
             "git push");
@@ -84,7 +84,7 @@ const checkBun = async () => {
         writeFileSync("bunjs-baseline-bin/PKGBUILD", pkg2base, {encoding: "utf-8"});
         execSync("cd bunjs-baseline-bin &&\n" +
             "makepkg --printsrcinfo > .SRCINFO &&\n" +
-            "git add * .*");
+            "git add PKGBUILD .SRCINFO");
         execSync(s + "cd bunjs-baseline-bin &&\n" +
             `git commit -m "${v2}" &&\n` +
             "git push");
