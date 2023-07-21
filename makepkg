@@ -31,7 +31,7 @@
 
 # gettext initialization
 export TEXTDOMAIN='pacman-scripts'
-export TEXTDOMAINDIR='/usr/share/locale'
+#export TEXTDOMAINDIR='/usr/share/locale'
 
 # file -i does not work on Mac OSX unless legacy mode is set
 export COMMAND_MODE='legacy'
@@ -41,11 +41,11 @@ unset CDPATH
 unset GREP_OPTIONS
 
 declare -r makepkg_version='6.0.2'
-declare -r confdir='/etc'
+#declare -r confdir='/etc'
 declare -r BUILDSCRIPT='PKGBUILD'
 declare -r startdir="$(pwd -P)"
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+LIBRARY=${LIBRARY:-'../makepkg_libs'}
 
 # Options
 ASDEPS=0
