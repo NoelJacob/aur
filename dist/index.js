@@ -38,8 +38,8 @@ var checkBun = async () => {
     let shax862 = "", shaarm2 = "";
     for (let x5 of l.assets) {
       if (x5.name === "SHASUMS256.txt") {
-        let res2 = await fetch(x5.browser_download_url).then((x6) => x6.text());
-        let shas = res2.split("\n");
+        let res = await fetch(x5.browser_download_url).then((x6) => x6.text());
+        let shas = res.split("\n");
         for (let x6 of shas) {
           let y = x6.split("  ");
           if (y[1] === "bun-linux-x64.zip")
@@ -61,15 +61,10 @@ var checkBun = async () => {
     let pkg1 = readFileSync("bunjs-bin/PKGBUILD", { encoding: "utf-8" });
     let pkg2 = pkg1.replace(v1, v2).replace(shax861, shax862).replace(shaarm1, shaarm2);
     writeFileSync("bunjs-bin/PKGBUILD", pkg2, { encoding: "utf-8" });
-    let res;
-    try {
-      res = execSync("bash ../makepkg --printsrcinfo", { cwd: "bunjs-bin" });
-    } catch (e) {
-      console.log(String(e));
-    }
-    console.log(res.toString());
+    execSync("makepkg --printsrcinfo > .SRCINFO", { cwd: "bunjs-bin" });
     execSync("git add PKGBUILD .SRCINFO", { cwd: "bunjs-bin" });
-    execSync(s + `git commit -m "${v2}" &&\n` + "git push", { cwd: "bunjs-bin" });
+    execSync(`git commit -m "${v2}"`, { cwd: "bunjs-bin" });
+    execSync(s + "git push", { cwd: "bunjs-bin" });
   }
   if (v1base !== v2) {
     let sha2base = "";
@@ -94,9 +89,10 @@ var checkBun = async () => {
     let pkg1base = readFileSync("bunjs-baseline-bin/PKGBUILD", { encoding: "utf-8" });
     let pkg2base = pkg1base.replace(v1base, v2).replace(sha1base, sha2base);
     writeFileSync("bunjs-baseline-bin/PKGBUILD", pkg2base, { encoding: "utf-8" });
-    execSync("../makepkg --printsrcinfo > .SRCINFO", { cwd: "bunjs-baseline-bin" });
+    execSync("makepkg --printsrcinfo > .SRCINFO", { cwd: "bunjs-baseline-bin" });
     execSync("git add PKGBUILD .SRCINFO", { cwd: "bunjs-baseline-bin" });
-    execSync(s + `git commit -m "${v2}" &&\n` + "git push", { cwd: "bunjs-baseline-bin" });
+    execSync(`git commit -m "${v2}"`, { cwd: "bunjs-baseline-bin" });
+    execSync(s + "git push", { cwd: "bunjs-baseline-bin" });
   }
 };
 await checkBun();
