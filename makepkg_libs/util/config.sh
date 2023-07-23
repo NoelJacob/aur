@@ -32,7 +32,7 @@ source "$LIBRARY/util/util.sh"
 source_makepkg_config() {
 	# $1: override system config file
 
-	local MAKEPKG_CONF=${1:-${MAKEPKG_CONF:-/etc/makepkg.conf}}
+	local MAKEPKG_CONF=${1:-${MAKEPKG_CONF:-../../makepkg.conf}}
 
 	# Source the config file; fail if it is not found
 	if [[ -r $MAKEPKG_CONF ]]; then
@@ -46,7 +46,7 @@ source_makepkg_config() {
 	# Source user-specific makepkg.conf overrides, but only if no override config
 	# file was specified
 	XDG_PACMAN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/pacman"
-	if [[ $MAKEPKG_CONF = "/etc/makepkg.conf" ]]; then
+	if [[ $MAKEPKG_CONF = "../../makepkg.conf" ]]; then
 		if [[ -r $XDG_PACMAN_DIR/makepkg.conf ]]; then
 			source_safe "$XDG_PACMAN_DIR/makepkg.conf"
 		elif [[ -r $HOME/.makepkg.conf ]]; then
@@ -60,7 +60,7 @@ source_makepkg_config() {
 load_makepkg_config() {
 	# $1: override system config file
 
-	local MAKEPKG_CONF=${1:-${MAKEPKG_CONF:-/etc/makepkg.conf}}
+	local MAKEPKG_CONF=${1:-${MAKEPKG_CONF:-../../makepkg.conf}}
 
 	# preserve environment variables to override makepkg.conf
 	local restore_envvars=$(

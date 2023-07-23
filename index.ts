@@ -53,8 +53,8 @@ const checkBun = async () => {
         let pkg1 = readFileSync("bunjs-bin/PKGBUILD", {encoding: "utf-8"});
         let pkg2 = pkg1.replace(v1, v2).replace(shax861, shax862).replace(shaarm1, shaarm2);
         writeFileSync("bunjs-bin/PKGBUILD", pkg2, {encoding: "utf-8"});
-        execSync("cd bunjs-bin &&\n" +
-            "../makepkg --printsrcinfo > .SRCINFO &&\n" +
+        execSync("./makepkg ./bunjs-bin/PKGBUILD --printsrcinfo > ./bunjs-bin/.SRCINFO &&\n" +
+            "cd bunjs-bin &&\n" +
             "git add PKGBUILD .SRCINFO");
         execSync(s + "cd bunjs-bin &&\n" +
             `git commit -m "${v2}" &&\n` +
@@ -82,8 +82,8 @@ const checkBun = async () => {
         let pkg1base = readFileSync("bunjs-baseline-bin/PKGBUILD", {encoding: "utf-8"});
         let pkg2base = pkg1base.replace(v1base, v2).replace(sha1base, sha2base);
         writeFileSync("bunjs-baseline-bin/PKGBUILD", pkg2base, {encoding: "utf-8"});
-        execSync("cd bunjs-baseline-bin &&\n" +
-            "../makepkg --printsrcinfo > .SRCINFO &&\n" +
+        execSync("./makepkg ./bunjs-baseline-bin/PKGBUILD --printsrcinfo > ./bunjs-baseline-bin/.SRCINFO &&\n" +
+            "cd bunjs-baseline-bin &&\n" +
             "git add PKGBUILD .SRCINFO");
         execSync(s + "cd bunjs-baseline-bin &&\n" +
             `git commit -m "${v2}" &&\n` +

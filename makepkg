@@ -45,7 +45,7 @@ declare -r confdir='./'
 declare -r BUILDSCRIPT='PKGBUILD'
 declare -r startdir="$(pwd -P)"
 
-LIBRARY=${LIBRARY:-'../makepkg_libs'}
+LIBRARY=${LIBRARY:-'./makepkg_libs'}
 
 # Options
 ASDEPS=0
