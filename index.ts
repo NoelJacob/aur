@@ -53,7 +53,7 @@ const checkBun = async () => {
         let pkg1 = readFileSync("bunjs-bin/PKGBUILD", {encoding: "utf-8"});
         let pkg2 = pkg1.replace(v1, v2).replace(shax861, shax862).replace(shaarm1, shaarm2);
         writeFileSync("bunjs-bin/PKGBUILD", pkg2, {encoding: "utf-8"});
-        let res = execSync("../makepkg --printsrcinfo", {cwd:"bunjs-bin"});
+        let res = execSync("bash ../makepkg --printsrcinfo", {cwd:"bunjs-bin"});
         console.log(res.toString());
         execSync("git add PKGBUILD .SRCINFO", {cwd:"bunjs-bin"});
         execSync(s + `git commit -m "${v2}" &&\n` +
