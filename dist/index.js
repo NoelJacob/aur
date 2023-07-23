@@ -10,6 +10,9 @@ if (!existsSync(`${env["HOME"]}/.ssh/aur_ed25519`)) {
   writeFileSync(`${env["HOME"]}/.ssh/aur_ed25519`, env["SSH_KEY"], { encoding: "utf-8", mode: 384 });
   execSync("ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts");
 }
+if (!existsSync(`${env["HOME"]}/.gitconfig`)) {
+  execSync("git config --global user.email \"noeljacob91@gmail.com\"\n &&git config --global user.name \"Noel Jacob\"\n");
+}
 var s = execSync("ssh-agent -s").toString() + `ssh-add ${env["HOME"]}/.ssh/aur_ed25519 &&\n`;
 execSync(s + "git submodule update --init --recursive");
 var checkBun = async () => {
