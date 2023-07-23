@@ -15,6 +15,7 @@ if (!existsSync(`${env["HOME"]}/.gitconfig`)) {
 }
 var s = execSync("ssh-agent -s").toString() + `ssh-add ${env["HOME"]}/.ssh/aur_ed25519 &&\n`;
 execSync(s + "git submodule update --init --recursive");
+execSync(s + "git submodule foreach --recursive git checkout master");
 var checkBun = async () => {
   let p = readFileSync("bunjs-bin/.SRCINFO", { encoding: "utf-8" });
   let x = p.match(/pkgver = ([0-9.]+)/);
