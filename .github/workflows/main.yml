@@ -6,7 +6,7 @@ on:
 
 jobs:
   update:
-    runs-on: archlinux:base-devel
+    runs-on: ubuntu-latest
     steps:
     - run: git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
     - run: node dist/index.js
