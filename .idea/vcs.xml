@@ -4,5 +4,6 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/bunjs-baseline-bin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/bunjs-bin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ton" vcs="Git" />
   </component>
 </project>
