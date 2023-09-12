@@ -1,6 +1,3 @@
-[submodule "bunjs-baseline-bin"]
-	path = bunjs-baseline-bin
-	url = ssh://aur@aur.archlinux.org/bunjs-baseline-bin.git
 [submodule "bunjs-bin"]
 	path = bunjs-bin
 	url = ssh://aur@aur.archlinux.org/bunjs-bin.git
