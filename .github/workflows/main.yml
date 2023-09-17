@@ -8,8 +8,16 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - run: git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
-    - run: node dist/index.js
+#    - run: git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
+    - run: |
+        curl -L \
+          -H "Accept: application/vnd.github+raw" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/noeljacob/aur/contents/target/x86_64-unknown-linux-gnu/release/aur
+    - run: chmod +x ./aur
+    - run: ./aur
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SSH_PUB: ${{ secrets.SSH_PUB }}
