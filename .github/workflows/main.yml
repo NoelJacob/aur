@@ -8,8 +8,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - run: git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
-    - run: node dist/index.js
+#    - run: git clone https://noeljacob:${{ github.token }}@github.com/noeljacob/aur.git ./;
+    - run: ./aur
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SSH_PUB: ${{ secrets.SSH_PUB }}
