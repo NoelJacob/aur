@@ -2,16 +2,19 @@ use eyre::{eyre, Result};
 use git2::{build::RepoBuilder, Cred, FetchOptions, PushOptions, RemoteCallbacks};
 use regex::Regex;
 use std::path::Path;
+use data_encoding::HEXLOWER;
+
+fn ascii_to_val(encoded_key: String) -> Result<String> {
+    let decoded_bytes = HEXLOWER.decode(encoded_key.as_bytes())?;
+    Ok(std::str::from_utf8(&decoded_bytes)?.to_string())
+}
 
 #[tokio::main]
 async fn main() -> Result<()> {
     let mut fo = FetchOptions::new();
     let mut cb = RemoteCallbacks::new();
-    let pk = std::env::var("SSH_PUB")?;
-    let k = format!(
-        "-----BEGIN OPENSSH PRIVATE KEY-----\n{}\n-----END OPENSSH PRIVATE KEY-----",
-        std::env::var("SSH_KEY")?.replace(' ', "\n")
-    );
+    let pk = ascii_to_val(std::env::var("SSH_PUB")?)?;
+    let k= ascii_to_val(std::env::var("SSH_KEY")?)?;
     let fo_pk = pk.clone();
     let fo_key = k.clone();
     cb.credentials(move |_, _, _| Cred::ssh_key_from_memory("aur", Some(&fo_pk), &fo_key, None));

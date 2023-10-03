@@ -28,8 +28,9 @@ dependencies = [
 
 [[package]]
 name = "aur"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
+ "data-encoding",
  "eyre",
  "git2",
  "regex",
@@ -122,6 +123,12 @@ name = "core-foundation-sys"
 version = "0.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e496a50fda8aacccc86d7529e2c1e0892dbd0f898a6b5645b5561b89c3210efa"
+
+[[package]]
+name = "data-encoding"
+version = "2.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c2e66c9d817f1720209181c316d28635c050fa304f9c79e47a520882661b7308"
 
 [[package]]
 name = "encoding_rs"
