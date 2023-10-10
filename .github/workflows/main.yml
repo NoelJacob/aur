@@ -16,7 +16,7 @@ jobs:
     - run: chmod +x ./aur
     - run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+        echo "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
         chmod 600 ~/.ssh/known_hosts
     - run: ./aur
       env:
