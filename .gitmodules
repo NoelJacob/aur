@@ -1,0 +1,9 @@
+[submodule "bunjs-bin"]
+	path = bunjs-bin
+	url = ssh://aur@aur.archlinux.org/bunjs-bin.git
+[submodule "bun-git"]
+	path = bun-git
+	url = ssh://aur@aur.archlinux.org/bun-git.git
+[submodule "bun-bin"]
+	path = bun-bin
+	url = ssh://aur@aur.archlinux.org/bun-bin.git
