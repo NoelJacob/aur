@@ -25,7 +25,7 @@ async fn main() -> Result<()> {
     let client = reqwest::Client::new();
 
     // aur
-    let pkg = "bunjs-bin";
+    let pkg = "bun-bin";
     let res = client
         .get(format!(
             "https://aur.archlinux.org/rpc/?v=5&type=info&arg[]={}",
