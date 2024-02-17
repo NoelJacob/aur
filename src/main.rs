@@ -117,7 +117,7 @@ async fn main() -> Result<()> {
     pkgbuild = pkgbuild.replacen(&aur_version, &github_version, 1);
     srcinfo = srcinfo.replacen(&aur_version, &github_version, 1);
     // update shaaarch
-    let mut re = Regex::new(r"sha256sums_aarch64=\('[0-9a-z]+'\)")?;
+    let mut re = Regex::new(r"sha256sums_aarch64=\(\n\t'[0-9a-z]+'")?;
     pkgbuild = re
         .replace(&pkgbuild, format!("sha256sums_aarch64=('{}')", sha.aarch))
         .to_string();
@@ -126,7 +126,7 @@ async fn main() -> Result<()> {
         .replacen(&srcinfo, 1, format!("sha256sums_aarch64 = {}", sha.aarch))
         .to_string();
     // update shax64
-    re = Regex::new(r"sha256sums_x86_64=\('[0-9a-z]+'\)")?;
+    re = Regex::new(r"sha256sums_x86_64=\(\n\t'[0-9a-z]+'")?;
     pkgbuild = re
         .replace(&pkgbuild, format!("sha256sums_x86_64=('{}')", sha.x64))
         .to_string();
