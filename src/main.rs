@@ -11,6 +11,15 @@ fn ascii_to_val(encoded_key: String) -> Result<String> {
 
 #[tokio::main]
 async fn main() -> Result<()> {
+
+    // get aur version
+
+    // get external version (specific fn)
+
+    // compare versions
+
+    //
+
     let mut fo = FetchOptions::new();
     let mut cb = RemoteCallbacks::new();
     let pk = ascii_to_val(std::env::var("SSH_PUB")?)?;
@@ -119,7 +128,7 @@ async fn main() -> Result<()> {
     // update shaaarch
     let mut re = Regex::new(r"sha256sums_aarch64=\(\n\t'[0-9a-z]+'")?;
     pkgbuild = re
-        .replace(&pkgbuild, format!("sha256sums_aarch64=('{}')", sha.aarch))
+        .replace(&pkgbuild, format!("sha256sums_aarch64=('{}'", sha.aarch))
         .to_string();
     re = Regex::new(r"sha256sums_aarch64 = [0-9a-z]+")?;
     srcinfo = re
@@ -128,7 +137,7 @@ async fn main() -> Result<()> {
     // update shax64
     re = Regex::new(r"sha256sums_x86_64=\(\n\t'[0-9a-z]+'")?;
     pkgbuild = re
-        .replace(&pkgbuild, format!("sha256sums_x86_64=('{}')", sha.x64))
+        .replace(&pkgbuild, format!("sha256sums_x86_64=('{}'", sha.x64))
         .to_string();
     re = Regex::new(r"sha256sums_x86_64 = [0-9a-z]+")?;
     srcinfo = re
