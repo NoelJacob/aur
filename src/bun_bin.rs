@@ -53,7 +53,6 @@ impl<'a> Meta<'a> {
             .tag_name
             .as_str()
             .replacen("bun-v", "", 1);
-        dbg!(&self.github_release.tag_name);
         Ok(github_version)
     }
 
@@ -74,7 +73,7 @@ impl<'a> Meta<'a> {
                     (r"_baseline_sha256sums='(0-9a-z]+'".to_string(), sha.baseline)],
             }
         ];
-        
+
         Ok(list)
     }
 
