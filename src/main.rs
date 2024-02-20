@@ -9,7 +9,6 @@ use regex::Regex;
 use data_encoding::HEXLOWER;
 use serde_json::Value;
 use structstruck::strike;
-use crate::bun_bin::Meta;
 
 async fn get_aur_version(client: &reqwest::Client, pkgs: Vec<&str>) -> Result<Vec<String>> {
     let res = client
