@@ -16,7 +16,7 @@ async fn test_get_aur_version() -> Result<()> {
 async fn bun_bin_extern_version() -> Result<()> {
     let client = reqwest::Client::new();
     let bb = bun_bin::Meta::new(&client).await?;
-    let github_version = bb.extern_version().await?;
+    let github_version = bb.extern_version()?;
     assert_eq!(github_version, "1.0.28");
     Ok(())
 }

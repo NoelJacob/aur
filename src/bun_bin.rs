@@ -18,6 +18,7 @@ pub struct Meta<'a> {
 }
 
 impl<'a> Meta<'a> {
+    // Setup new instance
     pub async fn new(client: &reqwest::Client) -> Result<Self> {
         let github_repo = "oven-sh/bun";
         let url = format!(
@@ -48,6 +49,7 @@ impl<'a> Meta<'a> {
         })
     }
 
+    // Get external version
     pub fn extern_version(&self) -> Result<String> {
         let github_version = self.github_release
             .tag_name
@@ -56,21 +58,24 @@ impl<'a> Meta<'a> {
         Ok(github_version)
     }
 
+    // Return list of files with regex to replace
     pub async fn replace_list(&self, client: &Client) -> Result<[Replaces; 2]> {
         let sha = get_sha(client, &self.github_release).await?;
-        let list: [Replaces; 2] = [
+        let list = [
             Replaces {
                 filename: ".SRCINFO".to_string(),
                 regex: vec![
-                    (r"sha256sums_aarch64 = [0-9a-z]+".to_string(), sha.aarch.clone()),
-                    (r"sha256sums_x86_64 = [0-9a-z]+".to_string(), sha.x64.clone())]
+                    (r"pkgver = [0-9\.]+".to_string(), format!("pkgver = {}", self.extern_version()?)),
+                    (r"sha256sums_aarch64 = [0-9a-fA-F]+".to_string(), format!("sha256sums_aarch64 = {}", sha.aarch.clone())),
+                    (r"sha256sums_x86_64 = [0-9a-fA-F]+".to_string(), format!("sha256sums_x86_64 = {}",sha.x64.clone()))]
             },
             Replaces {
                 filename: "PKGBUILD".to_string(),
                 regex: vec![
-                    (r"sha256sums_aarch64=\('[0-9a-z]+'".to_string(), sha.aarch),
-                    (r"sha256sums_x86_64=\('[0-9a-z]+'".to_string(), sha.x64),
-                    (r"_baseline_sha256sums='(0-9a-z]+'".to_string(), sha.baseline)],
+                    (r"pkgver=[0-9\.]+".to_string(), format!("pkgver={}", self.extern_version()?)),
+                    (r"sha256sums_aarch64=\('[0-9a-fA-F]+'".to_string(), format!("sha256sums_aarch64=('{}'", sha.aarch)),
+                    (r"sha256sums_x86_64=\('[0-9a-fA-F]+'".to_string(), format!("sha256sums_x86_64=('{}'", sha.x64)),
+                    (r"_baseline_sha256sums='[0-9a-fA-F]+'".to_string(), format!("_baseline_sha256sums='{}'", sha.baseline))],
             }
         ];
 
