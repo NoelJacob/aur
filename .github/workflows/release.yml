@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: Swatinem/rust-cache@v2.7.3
     - name: Build
-      run: cargo build +nightly -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu --release
+      run: cargo +nightly build -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu --release
     - uses: cb80/pubrel@v0.20.0
       with:
         replace: latest
