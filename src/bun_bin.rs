@@ -1,4 +1,3 @@
-use reqwest::Client;
 use super::*;
 
 strike! {
@@ -19,7 +18,7 @@ pub struct Meta<'a> {
 
 impl<'a> Meta<'a> {
     // Setup new instance
-    pub async fn new(client: &reqwest::Client) -> Result<Self> {
+    pub async fn new(client: &Client) -> Result<Self> {
         let github_repo = "oven-sh/bun";
         let url = format!(
             "https://api.github.com/repos/{}/releases/latest",

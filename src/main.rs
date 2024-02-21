@@ -9,8 +9,9 @@ use regex::Regex;
 use data_encoding::HEXLOWER;
 use serde_json::Value;
 use structstruck::strike;
+use reqwest::Client;
 
-async fn get_aur_version(client: &reqwest::Client, pkgs: Vec<&str>) -> Result<Vec<String>> {
+async fn get_aur_version(client: &Client, pkgs: Vec<&str>) -> Result<Vec<String>> {
     let res = client
         .get(format!(
             "https://aur.archlinux.org/rpc/v5/info?arg[]={}",
