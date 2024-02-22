@@ -13,7 +13,7 @@ jobs:
     - run: |
         curl -L \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://github.com/NoelJacob/aur/releases/download/latest/aur \
+          https://github.com/NoelJacob/aur/releases/latest/download/aur \
           -o ./aur
     - run: chmod +x ./aur
     - run: |
