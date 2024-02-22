@@ -34,4 +34,4 @@ jobs:
         commit: "master"
         generateReleaseNotes: true
         makeLatest: "latest"
-        # tag: ${{ env.VERSION }}
+        tag: ${{ env.VERSION }}
