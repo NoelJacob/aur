@@ -23,6 +23,10 @@ jobs:
         components: rust-src
     - name: Build
       run: cargo +nightly build -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu --release
+    - name: Extract version
+      run: |
+        version=$(grep "^version" Cargo.toml | head -1 | awk -F\" '{print $2}')
+        echo "VERSION=$version" >> $GITHUB_ENV
     - uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
@@ -30,5 +34,4 @@ jobs:
         commit: "master"
         generateReleaseNotes: true
         makeLatest: "latest"
-        tag: "latest"
-      
+        tag: ${{ env.VERSION }}
