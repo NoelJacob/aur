@@ -76,7 +76,7 @@ fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     let k1 = k.clone();
     cb.credentials(move |_, _, _| Cred::ssh_key_from_memory("aur", Some(&pk1), &k1, None));
     fo.remote_callbacks(cb);
-    fo.depth(1);
+    // fo.depth(1);
     let mut repo_client = RepoBuilder::new();
     repo_client.fetch_options(fo);
     Ok((pk, k, repo_client))
@@ -97,7 +97,7 @@ async fn main() -> Result<()> {
         let ext_version = pkg.extern_version()?;
         if aur_versions[idx] == ext_version {
             println!("{} is up to date", pkg.name);
-            // continue;
+            continue;
         }
         let repo = repo_client
             .clone(&format!("ssh://aur@aur.archlinux.org/{}.git", pkg.name),
