@@ -69,7 +69,7 @@ fn commit_and_push(pk: &str, k: &str, name: &str, ext_version: &String, repo: &R
 
 fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     let mut fo = FetchOptions::new();
-    fo.depth(1);
+    // fo.depth(1);
     let mut cb = RemoteCallbacks::new();
     let pk = ascii_to_val(std::env::var("SSH_PUB")?)?;
     let k = ascii_to_val(std::env::var("SSH_KEY")?)?;
