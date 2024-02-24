@@ -97,7 +97,7 @@ async fn main() -> Result<()> {
         let ext_version = pkg.extern_version()?;
         if aur_versions[idx] == ext_version {
             println!("{} is up to date", pkg.name);
-            continue;
+            // continue;
         }
         let repo = repo_client
             .clone(&format!("ssh://aur@aur.archlinux.org/{}.git", pkg.name),
