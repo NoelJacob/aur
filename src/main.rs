@@ -69,7 +69,6 @@ fn commit_and_push(pk: &str, k: &str, name: &str, ext_version: &String, repo: &R
 
 fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     let mut fo = FetchOptions::new();
-    // fo.depth(1);
     let mut cb = RemoteCallbacks::new();
     let pk = ascii_to_val(std::env::var("SSH_PUB")?)?;
     let k = ascii_to_val(std::env::var("SSH_KEY")?)?;
@@ -77,6 +76,7 @@ fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     let k1 = k.clone();
     cb.credentials(move |_, _, _| Cred::ssh_key_from_memory("aur", Some(&pk1), &k1, None));
     fo.remote_callbacks(cb);
+    fo.depth(1);
     let mut repo_client = RepoBuilder::new();
     repo_client.fetch_options(fo);
     Ok((pk, k, repo_client))
