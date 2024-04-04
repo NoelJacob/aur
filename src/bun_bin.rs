@@ -11,12 +11,13 @@ strike! {
         }
 }
 
-pub struct Meta<'a> {
+pub struct BunBin {
+   // The package name in AUR
+   pub pkg_name: String,
    github_release: GithubRelease,
-   pub name: &'a str,
 }
 
-impl<'a> Meta<'a> {
+impl BunBin {
     // Setup new instance
     pub async fn new(client: &Client) -> Result<Self> {
         let github_repo = "oven-sh/bun";
@@ -44,7 +45,7 @@ impl<'a> Meta<'a> {
 
         Ok(Self {
             github_release: res.json().await?,
-            name: "bun-bin"
+            pkg_name: "bun-bin".to_string(),
         })
     }
 

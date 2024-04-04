@@ -86,9 +86,9 @@ fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
 async fn main() -> Result<()> {
     let client = reqwest::Client::new();
     let pkgs = [
-        bun_bin::Meta::new(&client).await?,
+        bun_bin::BunBin::new(&client).await?,
     ];
-    let pkg_names = pkgs.iter().map(|p| p.name).collect();
+    let pkg_names = pkgs.iter().map(|p| p.pkg_name.as_str()).collect();
     let aur_versions = get_aur_version(&client, pkg_names).await?;
 
     let (pk,  k, mut repo_client) = setup_git_and_get_keys()?;
@@ -96,12 +96,12 @@ async fn main() -> Result<()> {
     for (idx, pkg) in pkgs.iter().enumerate() {
         let ext_version = pkg.extern_version()?;
         if aur_versions[idx] == ext_version {
-            println!("{} is up to date", pkg.name);
+            println!("{} is up to date", pkg.pkg_name);
             continue;
         }
         let repo = repo_client
-            .clone(&format!("ssh://aur@aur.archlinux.org/{}.git", pkg.name),
-                std::env::current_dir()?.join(pkg.name).as_path(),
+            .clone(&format!("ssh://aur@aur.archlinux.org/{}.git", pkg.pkg_name),
+                   std::env::current_dir()?.join(&pkg.pkg_name).as_path(),
             )?;
         let mut index = repo.index()?;
         let dir = repo.workdir()
@@ -118,7 +118,7 @@ async fn main() -> Result<()> {
             index.add_path(replace.filename.as_ref())?;
         }
 
-        commit_and_push(&pk, &k, pkg.name, &ext_version, &repo, &mut index)?;
+        commit_and_push(&pk, &k, &pkg.pkg_name, &ext_version, &repo, &mut index)?;
     }
     Ok(())
 }
