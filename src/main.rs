@@ -3,6 +3,7 @@ mod bun_bin;
 #[cfg(test)]
 mod tests;
 
+use std::{env, fs};
 use eyre::{eyre, Result};
 use git2::{build::RepoBuilder, Cred, FetchOptions, Index, PushOptions, RemoteCallbacks, Repository};
 use regex::Regex;
@@ -45,10 +46,7 @@ fn commit_and_push(pk: &str, k: &str, name: &str, ext_version: &String, repo: &R
     config.set_str("user.email", email)?;
     let sig = repo.signature()?;
     let oid = index.write_tree()?;
-    let parent_commit = match repo.head() {
-        Ok(head) => repo.find_commit(head.target().ok_or_else(|| eyre!("No target"))?)?,
-        Err(e) => return Err(e.into()),
-    };
+    let parent_commit = repo.find_commit(repo.head()?.target().ok_or_else(|| eyre!("No target"))?)?;
     repo.commit(
         Some("HEAD"),
         &sig,
@@ -70,8 +68,8 @@ fn commit_and_push(pk: &str, k: &str, name: &str, ext_version: &String, repo: &R
 fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     let mut fo = FetchOptions::new();
     let mut cb = RemoteCallbacks::new();
-    let pk = ascii_to_val(std::env::var("SSH_PUB")?)?;
-    let k = ascii_to_val(std::env::var("SSH_KEY")?)?;
+    let pk = ascii_to_val(env::var("SSH_PUB")?)?;
+    let k = ascii_to_val(env::var("SSH_KEY")?)?;
     let pk1 = pk.clone();
     let k1 = k.clone();
     cb.credentials(move |_, _, _| Cred::ssh_key_from_memory("aur", Some(&pk1), &k1, None));
@@ -82,9 +80,9 @@ fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     Ok((pk, k, repo_client))
 }
 
-#[tokio::main]
+#[compio::main]
 async fn main() -> Result<()> {
-    let client = reqwest::Client::new();
+    let client = Client::new();
     let pkgs = [
         bun_bin::BunBin::new(&client).await?,
     ];
@@ -101,7 +99,7 @@ async fn main() -> Result<()> {
         }
         let repo = repo_client
             .clone(&format!("ssh://aur@aur.archlinux.org/{}.git", pkg.pkg_name),
-                   std::env::current_dir()?.join(&pkg.pkg_name).as_path(),
+                   env::current_dir()?.join(&pkg.pkg_name).as_path(),
             )?;
         let mut index = repo.index()?;
         let dir = repo.workdir()
@@ -109,12 +107,12 @@ async fn main() -> Result<()> {
 
         let replace_list = pkg.replace_list(&client).await?;
         for replace in replace_list {
-            let mut file = std::fs::read_to_string(dir.join(&replace.filename))?;
+            let mut file = fs::read_to_string(dir.join(&replace.filename))?;
             for (regex, value) in replace.regex {
                 let re = Regex::new(&regex)?;
                 file = re.replace(&file, value).to_string();
             }
-            std::fs::write(dir.join(&replace.filename), file)?;
+            fs::write(dir.join(&replace.filename), file)?;
             index.add_path(replace.filename.as_ref())?;
         }
 
