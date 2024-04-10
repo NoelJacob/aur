@@ -80,7 +80,7 @@ fn setup_git_and_get_keys<'a>() -> Result<(String, String, RepoBuilder<'a>)> {
     Ok((pk, k, repo_client))
 }
 
-#[compio::main]
+#[tokio::main]
 async fn main() -> Result<()> {
     let client = Client::new();
     let pkgs = [
