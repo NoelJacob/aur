@@ -90,7 +90,7 @@ async fn main() -> Result<()> {
     let aur_versions = match get_aur_version(&client, pkg_names).await {
         Ok(versions) => versions,
         Err(e) if e.to_string().starts_with("error sending request for url") => {
-            println!("Warning: {}", e);
+            eprintln!("Warning: {}", e);
             return Ok(());
         },
         Err(e) => return Err(e),
@@ -115,7 +115,7 @@ async fn main() -> Result<()> {
         let replace_list = match pkg.replace_list(&client).await {
             Ok(list) => list,
             Err(e) if e.to_string() == "No checksums" => {
-                println!("Warning: {}", e);
+                eprintln!("Warning: {}", e);
                 continue;
             },
             Err(e) => return Err(e),
