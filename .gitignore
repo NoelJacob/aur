@@ -133,7 +133,6 @@ out
 # vuepress v2.x temp and cache directory
 
 .temp
-.cache
 
 # Docusaurus cache and generated files
 
@@ -171,4 +170,4 @@ out
 # Added by cargo
 
 /target/
-!/target/x86_64-unknown-linux-gnu/release/aur
+#!/target/x86_64-unknown-linux-gnu/release/aur
